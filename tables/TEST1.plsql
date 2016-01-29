@@ -1,0 +1,65 @@
+ALTER TABLE TEST1
+ DROP PRIMARY KEY CASCADE;
+
+DROP TABLE TEST1 CASCADE CONSTRAINTS;
+
+CREATE TABLE TEST1
+(
+  EMAIL1  VARCHAR2(100 BYTE)                    NOT NULL,
+  DATA1   VARCHAR2(100 BYTE)                    NOT NULL,
+  AMOUNT  INTEGER                               DEFAULT 0                     NOT NULL
+)
+TABLESPACE MYTABLESPACE_DATA
+PCTUSED    0
+PCTFREE    10
+INITRANS   1
+MAXTRANS   255
+STORAGE    (
+            INITIAL          64K
+            NEXT             1M
+            MINEXTENTS       1
+            MAXEXTENTS       UNLIMITED
+            PCTINCREASE      0
+            BUFFER_POOL      DEFAULT
+           )
+LOGGING 
+NOCOMPRESS 
+NOCACHE
+NOPARALLEL
+MONITORING;
+
+
+CREATE UNIQUE INDEX TEST1_PK ON TEST1
+(EMAIL1)
+LOGGING
+TABLESPACE MYTABLESPACE_DATA
+PCTFREE    10
+INITRANS   2
+MAXTRANS   255
+STORAGE    (
+            INITIAL          64K
+            NEXT             1M
+            MINEXTENTS       1
+            MAXEXTENTS       UNLIMITED
+            PCTINCREASE      0
+            BUFFER_POOL      DEFAULT
+           )
+NOPARALLEL;
+
+
+ALTER TABLE TEST1 ADD (
+  CONSTRAINT TEST1_PK
+ PRIMARY KEY
+ (EMAIL1)
+    USING INDEX 
+    TABLESPACE MYTABLESPACE_DATA
+    PCTFREE    10
+    INITRANS   2
+    MAXTRANS   255
+    STORAGE    (
+                INITIAL          64K
+                NEXT             1M
+                MINEXTENTS       1
+                MAXEXTENTS       UNLIMITED
+                PCTINCREASE      0
+               ));

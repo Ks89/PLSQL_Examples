@@ -1,0 +1,28 @@
+CREATE OR REPLACE FUNCTION GENERIC_EXAMPLES RETURN NUMBER IS
+    email1 TEST1.EMAIL1%TYPE;
+    data1 TEST1.DATA1%TYPE;
+    amount TEST1.AMOUNT%TYPE;
+    
+BEGIN
+
+    DELETE FROM TEST1
+    WHERE EMAIL1 = 'n'
+    RETURNING  EMAIL1, DATA1, AMOUNT
+    INTO email1, data1, amount;
+
+    
+    IF SQL%FOUND THEN
+        DBMS_OUTPUT.PUT_LINE('description is: ' || 'dasdasd' );   
+    END IF;
+    
+   -- to undo the delete
+   ROLLBACK; 
+    
+   RETURN 0;
+   EXCEPTION
+     WHEN NO_DATA_FOUND THEN
+       NULL;
+     WHEN OTHERS THEN
+       RAISE;
+END GENERIC_EXAMPLES;
+/
